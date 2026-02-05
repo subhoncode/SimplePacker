@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SimplePacker.Payload/SimplePacker.Payload.csproj" />
+  <Project Path="SimplePaсker.Loader/SimplePaсker.Loader.csproj" />
+</Solution>
