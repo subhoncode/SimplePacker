@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.IO;
+using System.Reflection;
 
-namespace SimplePaсker.Loader
+namespace SimplePacker.Loader
 {
     internal class Packer
     {

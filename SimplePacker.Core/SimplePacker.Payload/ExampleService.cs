@@ -1,4 +1,6 @@
-﻿namespace SimplePacker.Payload
+﻿using System;
+
+namespace SimplePacker.Payload
 {
     public class ExampleService
     {

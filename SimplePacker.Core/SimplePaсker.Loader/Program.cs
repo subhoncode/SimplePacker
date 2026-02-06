@@ -1,4 +1,6 @@
-﻿namespace SimplePaсker.Loader
+﻿using System;
+
+namespace SimplePacker.Loader
 {
     internal class Program
     {
