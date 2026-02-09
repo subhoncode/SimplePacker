@@ -19,11 +19,11 @@ namespace SimplePacker.Loader
             Assembly assembly = Assembly.Load(Pack(binFile));
             Type? type = assembly.GetType(typeName);
 
-            if (type != null)
-            {
-                object? instance = Activator.CreateInstance(type);
-                type.GetMethod(methodName)?.Invoke(instance, null);
-            }
+            if (type == null)
+                return;
+
+            object? instance = Activator.CreateInstance(type);
+            type.GetMethod(methodName)?.Invoke(instance, null);
         }
 
         private static byte[] Pack(string file)
@@ -49,3 +49,4 @@ namespace SimplePacker.Loader
         }
     }
 }
+
