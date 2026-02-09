@@ -1,5 +1,3 @@
-﻿using System;
-using System.IO;
 using System.Reflection;
 
 namespace SimplePacker.Loader
@@ -10,12 +8,7 @@ namespace SimplePacker.Loader
 
         public static void Protect(string inputFile, string outputFile)
         {
-            if (!File.Exists(inputFile)) return;
-
-            byte[] data = File.ReadAllBytes(inputFile);
-            XorTransform(data);
-
-            File.WriteAllBytes(outputFile, data);
+            File.WriteAllBytes(outputFile, Pack(inputFile));
             File.Delete(inputFile);
 
             Console.WriteLine($"[Packer] Binary successfully encoded:\n{inputFile}");
@@ -23,16 +16,7 @@ namespace SimplePacker.Loader
 
         public static void Launch(string binFile, string typeName, string methodName)
         {
-            if (!File.Exists(binFile))
-            {
-                Console.WriteLine("[Error] Binary not found.");
-                return;
-            }
-
-            byte[] data = File.ReadAllBytes(binFile);
-            XorTransform(data);
-
-            Assembly assembly = Assembly.Load(data);
+            Assembly assembly = Assembly.Load(Pack(binFile));
             Type? type = assembly.GetType(typeName);
 
             if (type != null)
@@ -40,6 +24,20 @@ namespace SimplePacker.Loader
                 object? instance = Activator.CreateInstance(type);
                 type.GetMethod(methodName)?.Invoke(instance, null);
             }
+        }
+
+        private static byte[] Pack(string file)
+        {
+            if (!File.Exists(file))
+            {
+                Console.WriteLine("[Error] Binary not found.");
+                return new byte[0];
+            }
+
+            byte[] data = File.ReadAllBytes(file);
+            XorTransform(data);
+
+            return data;
         }
 
         private static void XorTransform(byte[] data)
